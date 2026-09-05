@@ -1,0 +1,276 @@
+// backend/prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum TransportCategory {
+  rail
+  brt
+  bus
+  other
+}
+
+enum DayType {
+  weekday
+  weekend
+  holiday
+}
+
+enum FareType {
+  flat
+  distance_based
+}
+
+enum PreferredOption {
+  fastest
+  cheapest
+  min_transfer
+  min_walk
+  most_comfortable
+}
+
+enum NotificationType {
+  schedule_reminder
+  service_disruption
+  report_update
+  system_info
+}
+
+enum ReportType {
+  data_salah
+  jadwal_tidak_akurat
+  layanan_terganggu
+  bug_aplikasi
+  lainnya
+}
+
+enum ReportStatus {
+  pending
+  reviewed
+  resolved
+  rejected
+}
+
+// Models
+model Role {
+  id        BigInt   @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  users     User[]
+}
+
+model User {
+  id            BigInt   @id @default(autoincrement())
+  roleId        BigInt
+  fullName      String
+  email         String   @unique
+  passwordHash  String
+  phoneNumber   String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  role          Role     @relation(fields: [roleId], references: [id])
+  favoriteTrips FavoriteTrip[]
+  userSchedules UserSchedule[]
+  notifications Notification[]
+  reports       Report[]
+}
+
+model City {
+  id        BigInt   @id @default(autoincrement())
+  name      String   @unique
+  province  String
+  createdAt DateTime @default(now())
+  stations  Station[]
+}
+
+model Operator {
+  id                 BigInt   @id @default(autoincrement())
+  name               String   @unique
+  websiteUrl         String?
+  supportContact     String?
+  supportsRealtime   Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  routes             Route[]
+}
+
+model TransportType {
+  id        BigInt   @id @default(autoincrement())
+  name      String   @unique
+  category  TransportCategory
+  createdAt DateTime @default(now())
+  stops     Stop[]
+  routes    Route[]
+}
+
+model Station {
+  id        BigInt   @id @default(autoincrement())
+  cityId    BigInt
+  name      String
+  latitude  Float
+  longitude Float
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  city      City     @relation(fields: [cityId], references: [id])
+  stops     Stop[]
+  favoriteTripsOrigin FavoriteTrip[] @relation("StationOrigin")
+  favoriteTripsDestination FavoriteTrip[] @relation("StationDestination")
+  userSchedulesOrigin UserSchedule[] @relation("StationOriginSchedule")
+  userSchedulesDestination UserSchedule[] @relation("StationDestinationSchedule")
+  reportsOrigin Report[] @relation("StationOriginReport")
+  reportsDestination Report[] @relation("StationDestinationReport")
+  @@unique([name, cityId])
+}
+
+model Stop {
+  id               BigInt   @id @default(autoincrement())
+  stationId        BigInt
+  transportTypeId  BigInt
+  name             String
+  code             String?
+  latitude         Float?
+  longitude        Float?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  station          Station @relation(fields: [stationId], references: [id])
+  transportType    TransportType @relation(fields: [transportTypeId], references: [id])
+  routeStops       RouteStop[]
+  faresFrom        Fare[] @relation("FareFrom")
+  faresTo          Fare[] @relation("FareTo")
+  @@unique([stationId, transportTypeId, name])
+}
+
+model Route {
+  id                BigInt   @id @default(autoincrement())
+  transportTypeId   BigInt
+  operatorId        BigInt
+  name              String
+  code              String?
+  directionLabel    String?
+  isActive          Boolean @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  transportType     TransportType @relation(fields: [transportTypeId], references: [id])
+  operator          Operator @relation(fields: [operatorId], references: [id])
+  routeStops        RouteStop[]
+  schedules         Schedule[]
+  fares             Fare[]
+  reports           Report[]
+}
+
+model RouteStop {
+  id                     BigInt   @id @default(autoincrement())
+  routeId                BigInt
+  stopId                 BigInt
+  sequenceNumber         Int
+  distanceFromStartKm    Float?
+  travelTimeFromPrevMin  Int?
+  createdAt              DateTime @default(now())
+  route   Route @relation(fields: [routeId], references: [id])
+  stop    Stop  @relation(fields: [stopId], references: [id])
+  @@unique([routeId, sequenceNumber])
+  @@unique([routeId, stopId])
+}
+
+model Schedule {
+  id          BigInt   @id @default(autoincrement())
+  routeId     BigInt
+  dayType     DayType
+  departureTime DateTime
+  headwayMinutes Int?
+  isRealtimeAvailable Boolean @default(false)
+  validFrom   DateTime?
+  validUntil  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  route       Route @relation(fields: [routeId], references: [id])
+  @@index([routeId, dayType])
+}
+
+model Fare {
+  id           BigInt   @id @default(autoincrement())
+  routeId      BigInt
+  fromStopId   BigInt?
+  toStopId     BigInt?
+  fareType     FareType
+  amount       Decimal @db.Decimal(10, 2)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  route        Route @relation(fields: [routeId], references: [id])
+  fromStop     Stop? @relation("FareFrom", fields: [fromStopId], references: [id])
+  toStop       Stop? @relation("FareTo", fields: [toStopId], references: [id])
+  @@unique([routeId, fromStopId, toStopId])
+}
+
+model FavoriteTrip {
+  id                  BigInt   @id @default(autoincrement())
+  userId              BigInt
+  label               String
+  originStationId     BigInt
+  destinationStationId BigInt
+  preferredOption     PreferredOption @default(fastest)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  user                User @relation(fields: [userId], references: [id])
+  originStation       Station @relation("StationOrigin", fields: [originStationId], references: [id])
+  destinationStation  Station @relation("StationDestination", fields: [destinationStationId], references: [id])
+  @@unique([userId, label])
+}
+
+model UserSchedule {
+  id                  BigInt   @id @default(autoincrement())
+  userId              BigInt
+  name                String
+  originStationId     BigInt
+  destinationStationId BigInt
+  requiredArrivalTime String  // Stored as "HH:MM" (time-of-day only; Prisma has no native Time scalar)
+  daysOfWeek          Int[]
+  preferredOption     PreferredOption @default(fastest)
+  isActive            Boolean @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  user                User @relation(fields: [userId], references: [id])
+  originStation       Station @relation("StationOriginSchedule", fields: [originStationId], references: [id])
+  destinationStation  Station @relation("StationDestinationSchedule", fields: [destinationStationId], references: [id])
+  @@index([userId, isActive])
+}
+
+model Notification {
+  id        BigInt   @id @default(autoincrement())
+  userId    BigInt
+  type      NotificationType
+  title     String
+  message   String
+  isRead    Boolean @default(false)
+  createdAt DateTime @default(now())
+  user      User @relation(fields: [userId], references: [id])
+  @@index([userId, isRead])
+  @@index([createdAt])
+}
+
+model Report {
+  id                 BigInt   @id @default(autoincrement())
+  userId             BigInt?
+  reportType         ReportType
+  relatedRouteId     BigInt?
+  relatedStationId   BigInt?
+  description        String
+  status             ReportStatus @default(pending)
+  adminResponse      String?
+  createdAt          DateTime @default(now())
+  resolvedAt         DateTime?
+  user               User? @relation(fields: [userId], references: [id])
+  relatedRoute       Route? @relation(fields: [relatedRouteId], references: [id])
+  relatedStation     Station? @relation(fields: [relatedStationId], references: [id])
+  @@index([status])
+  @@index([userId])
+}

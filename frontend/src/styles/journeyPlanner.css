@@ -1,0 +1,687 @@
+/* Journey Planner – component styles */
+
+/* ─── Layout ─────────────────────────────────────────────────────────────── */
+.jp-page {
+  min-height: 100vh;
+  background: var(--color-background, #F8FAFC);
+  font-family: 'Inter', sans-serif;
+}
+
+/* ─── Hero / Search form ─────────────────────────────────────────────────── */
+.jp-hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1D4ED8 100%);
+  padding: 48px 24px 64px;
+  color: #fff;
+}
+
+.jp-hero__inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.jp-hero__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+}
+
+.jp-hero__subtitle {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.72);
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+/* ─── Search card ────────────────────────────────────────────────────────── */
+.jp-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(15,23,42,0.14);
+  padding: 28px 24px;
+}
+
+/* ─── Location row ───────────────────────────────────────────────────────── */
+.jp-location-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.jp-location-inputs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.jp-swap-btn {
+  background: none;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563EB;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+
+.jp-swap-btn:hover {
+  background: #EFF6FF;
+  border-color: #2563EB;
+}
+
+/* ─── Location input ─────────────────────────────────────────────────────── */
+.jp-location {
+  position: relative;
+}
+
+.jp-location__icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748B;
+  pointer-events: none;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jp-location__input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 50px;
+  padding: 0 14px 0 42px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  color: #111827;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  font-family: 'Inter', sans-serif;
+}
+
+.jp-location__input::placeholder { color: #94A3B8; }
+.jp-location__input:focus {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+}
+
+.jp-location__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(15,23,42,0.10);
+  z-index: 200;
+  overflow: hidden;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.jp-location__option {
+  padding: 11px 16px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: #111827;
+  border-bottom: 1px solid #F1F5F9;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: background 0.1s;
+}
+
+.jp-location__option:last-child { border-bottom: none; }
+.jp-location__option:hover { background: #EFF6FF; }
+.jp-location__option-name { font-weight: 500; }
+.jp-location__option-city { font-size: 0.8rem; color: #64748B; }
+
+/* ─── Row: mode / date / time ────────────────────────────────────────────── */
+.jp-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 640px) {
+  .jp-row { grid-template-columns: 1fr; }
+}
+
+/* ─── Mode toggle ────────────────────────────────────────────────────────── */
+.jp-mode-toggle {
+  display: flex;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 50px;
+}
+
+.jp-mode-toggle__btn {
+  flex: 1;
+  background: none;
+  border: none;
+  font-size: 0.78rem;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  color: #64748B;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+  padding: 0 4px;
+}
+
+.jp-mode-toggle__btn--active {
+  background: #EFF6FF;
+  color: #2563EB;
+  font-weight: 600;
+}
+
+/* ─── Date / Time fields ─────────────────────────────────────────────────── */
+.jp-field {
+  position: relative;
+}
+
+.jp-field__label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #64748B;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.jp-field__input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 50px;
+  padding: 0 14px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  color: #111827;
+  background: #fff;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.jp-field__input:focus {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+}
+
+/* ─── Preference chips ───────────────────────────────────────────────────── */
+.jp-prefs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.jp-pref-chip {
+  padding: 7px 14px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 20px;
+  background: #fff;
+  font-size: 0.8125rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.jp-pref-chip:hover {
+  border-color: #2563EB;
+  color: #2563EB;
+  background: #EFF6FF;
+}
+
+.jp-pref-chip--active {
+  background: #2563EB;
+  border-color: #2563EB;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ─── Search button ──────────────────────────────────────────────────────── */
+.jp-search-btn {
+  width: 100%;
+  height: 50px;
+  background: #2563EB;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.jp-search-btn:hover:not(:disabled) {
+  background: #1D4ED8;
+}
+
+.jp-search-btn:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.jp-search-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ─── Results section ────────────────────────────────────────────────────── */
+.jp-results {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.jp-results__heading {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 20px;
+}
+
+/* ─── Recommendation banner ──────────────────────────────────────────────── */
+.jp-recommendation {
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+  border: 1.5px solid #BFDBFE;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.jp-recommendation__badge {
+  display: inline-block;
+  background: #2563EB;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.jp-recommendation__depart {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 4px;
+}
+
+.jp-recommendation__meta {
+  font-size: 0.875rem;
+  color: #1D4ED8;
+  margin-bottom: 6px;
+}
+
+.jp-recommendation__buffer {
+  font-size: 0.8rem;
+  color: #64748B;
+}
+
+/* ─── Route card ─────────────────────────────────────────────────────────── */
+.jp-route-card {
+  background: #fff;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.jp-route-card:hover {
+  border-color: #2563EB;
+  box-shadow: 0 4px 12px rgba(37,99,235,0.10);
+}
+
+.jp-route-card--selected {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+}
+
+.jp-route-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.jp-route-card__times {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.jp-route-card__duration {
+  font-size: 0.875rem;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.jp-route-card__badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #EFF6FF;
+  color: #2563EB;
+}
+
+.jp-route-card__legs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.jp-route-card__leg-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #F1F5F9;
+  color: #374151;
+}
+
+.jp-route-card__leg-chip--rail    { background: #EEF2FF; color: #4338CA; }
+.jp-route-card__leg-chip--brt     { background: #FFF7ED; color: #C2410C; }
+.jp-route-card__leg-chip--bus     { background: #FFF7ED; color: #D97706; }
+.jp-route-card__leg-chip--other   { background: #F1F5F9; color: #475569; }
+.jp-route-card__leg-chip--walking { background: #ECFDF5; color: #059669; }
+
+.jp-route-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8375rem;
+  color: #64748B;
+  border-top: 1px solid #F1F5F9;
+  padding-top: 10px;
+}
+
+.jp-route-card__detail-btn {
+  background: none;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 5px 14px;
+  font-size: 0.8125rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  color: #0F172A;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.jp-route-card__detail-btn:hover {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+}
+
+/* ─── Route timeline ─────────────────────────────────────────────────────── */
+.jp-timeline-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.5);
+  z-index: 400;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: jp-fade-in 0.15s ease;
+}
+
+@keyframes jp-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.jp-timeline-sheet {
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 28px 24px 40px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 -8px 40px rgba(15,23,42,0.18);
+  animation: jp-slide-up 0.2s ease;
+}
+
+@keyframes jp-slide-up {
+  from { transform: translateY(60px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.jp-timeline-sheet__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.jp-timeline-sheet__title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.jp-timeline-close {
+  background: #F1F5F9;
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.jp-timeline-close:hover { background: #E2E8F0; }
+
+.jp-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.jp-tl-item {
+  display: flex;
+  gap: 14px;
+  position: relative;
+}
+
+.jp-tl-item::before {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 28px;
+  bottom: -28px;
+  width: 2px;
+  background: #E2E8F0;
+}
+
+.jp-tl-item:last-child::before { display: none; }
+
+.jp-tl-dot {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+  z-index: 1;
+  border: 2px solid #E2E8F0;
+  background: #fff;
+}
+
+.jp-tl-dot--origin      { background: #EFF6FF; border-color: #2563EB; }
+.jp-tl-dot--destination { background: #ECFDF5; border-color: #16A34A; }
+.jp-tl-dot--transfer    { background: #FFF7ED; border-color: #F59E0B; }
+.jp-tl-dot--rail        { background: #EEF2FF; border-color: #4338CA; }
+.jp-tl-dot--brt         { background: #FFF7ED; border-color: #C2410C; }
+.jp-tl-dot--bus         { background: #FFF7ED; border-color: #D97706; }
+.jp-tl-dot--walking     { background: #ECFDF5; border-color: #059669; }
+
+.jp-tl-content {
+  padding-bottom: 28px;
+  flex: 1;
+}
+
+.jp-tl-time { font-size: 0.9375rem; font-weight: 700; color: #0F172A; }
+.jp-tl-name { font-size: 0.875rem; font-weight: 500; color: #374151; }
+.jp-tl-meta { font-size: 0.8rem; color: #64748B; margin-top: 2px; }
+
+/* ─── Loading / Empty / Error states ────────────────────────────────────── */
+.jp-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 24px;
+  gap: 12px;
+  color: #64748B;
+}
+
+.jp-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #E2E8F0;
+  border-top-color: #2563EB;
+  border-radius: 50%;
+  animation: jp-spin 0.7s linear infinite;
+}
+
+@keyframes jp-spin {
+  to { transform: rotate(360deg); }
+}
+
+.jp-empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: #64748B;
+}
+
+.jp-empty__icon { font-size: 2.5rem; margin-bottom: 12px; }
+.jp-empty__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.jp-error {
+  background: #FEF2F2;
+  border: 1.5px solid #FECACA;
+  border-radius: 12px;
+  padding: 16px 20px;
+  color: #DC2626;
+  font-size: 0.875rem;
+  margin-bottom: 20px;
+}
+
+/* ─── Journey summary strip ──────────────────────────────────────────────── */
+.jp-summary-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.jp-summary-item {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 14px 12px;
+  text-align: center;
+}
+
+.jp-summary-item__value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.jp-summary-item__label {
+  font-size: 0.75rem;
+  color: #64748B;
+}
+
+/* ─── Auth notice ────────────────────────────────────────────────────────── */
+.jp-auth-notice {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.jp-auth-notice__icon { font-size: 2.5rem; margin-bottom: 12px; }
+.jp-auth-notice__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 8px;
+}
+.jp-auth-notice__sub {
+  font-size: 0.875rem;
+  color: #64748B;
+  margin-bottom: 20px;
+}
+.jp-auth-notice__btn {
+  display: inline-block;
+  background: #2563EB;
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9375rem;
+}
+
+/* ─── Validation error messages ──────────────────────────────────────────── */
+.jp-field-error {
+  font-size: 0.78rem;
+  color: #DC2626;
+  margin-top: 4px;
+}
+
+/* ─── Responsive adjustments ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .jp-hero { padding: 32px 16px 48px; }
+  .jp-hero__title { font-size: 1.5rem; }
+  .jp-results { padding: 24px 16px; }
+  .jp-timeline-sheet { border-radius: 16px 16px 0 0; padding: 20px 16px 32px; }
+}
