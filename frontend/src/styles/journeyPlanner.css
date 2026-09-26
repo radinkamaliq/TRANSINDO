@@ -29,9 +29,9 @@
 
 .jp-hero__subtitle {
   font-size: 0.95rem;
-  color: rgba(255,255,255,0.72);
+  color: rgba(255,255,255,0.82);
   margin-bottom: 32px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* ─── Search card ────────────────────────────────────────────────────────── */
@@ -142,6 +142,13 @@
   flex-direction: column;
   gap: 2px;
   transition: background 0.1s;
+  outline: none;
+}
+
+.jp-location__option:focus-visible {
+  background: #EFF6FF;
+  outline: 2px solid #2563EB;
+  outline-offset: -2px;
 }
 
 .jp-location__option:last-child { border-bottom: none; }
@@ -260,7 +267,7 @@
 /* ─── Search button ──────────────────────────────────────────────────────── */
 .jp-search-btn {
   width: 100%;
-  height: 50px;
+  height: 48px;
   background: #2563EB;
   color: #fff;
   border: none;
@@ -357,6 +364,13 @@
 .jp-route-card:hover {
   border-color: #2563EB;
   box-shadow: 0 4px 12px rgba(37,99,235,0.10);
+}
+
+.jp-route-card:focus-visible {
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.18);
 }
 
 .jp-route-card--selected {
@@ -459,6 +473,16 @@
   animation: jp-fade-in 0.15s ease;
 }
 
+@media (min-width: 768px) {
+  .jp-timeline-overlay {
+    align-items: center;
+  }
+  .jp-timeline-sheet {
+    border-radius: 20px;
+    max-height: 80vh;
+  }
+}
+
 @keyframes jp-fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -527,8 +551,8 @@
   content: '';
   position: absolute;
   left: 19px;
-  top: 28px;
-  bottom: -28px;
+  top: 38px;
+  bottom: 0;
   width: 2px;
   background: #E2E8F0;
 }
@@ -684,4 +708,17 @@
   .jp-hero__title { font-size: 1.5rem; }
   .jp-results { padding: 24px 16px; }
   .jp-timeline-sheet { border-radius: 16px 16px 0 0; padding: 20px 16px 32px; }
+}
+
+@media (min-width: 641px) and (max-width: 1023px) {
+  /* Tablet: keep grid 3-col but loosen spacing */
+  .jp-row { gap: 10px; }
+  .jp-card { padding: 24px 20px; }
+}
+
+@media (min-width: 1024px) {
+  /* Desktop: more generous hero + results padding */
+  .jp-hero { padding: 64px 48px 80px; }
+  .jp-hero__title { font-size: 2.5rem; }
+  .jp-results { padding: 40px 32px; }
 }

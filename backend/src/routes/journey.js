@@ -4,12 +4,10 @@ const express = require('express');
 const router = express.Router();
 
 const journeyController = require('../controllers/journeyController');
-const authMiddleware    = require('../middleware/auth');
-const authorizeRoles   = require('../middleware/role');
+const optionalAuth      = require('../middleware/optionalAuth');
 
-// All journey endpoints require authentication
-router.use(authMiddleware);
-router.use(authorizeRoles('user', 'admin'));
+// Optional authentication allows guests per PRD §13.2 FR-JP-06
+router.use(optionalAuth);
 
 // POST /api/journey/plan
 router.post('/plan', journeyController.plan);

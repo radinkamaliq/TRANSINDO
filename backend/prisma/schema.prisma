@@ -126,8 +126,7 @@ model Station {
   favoriteTripsDestination FavoriteTrip[] @relation("StationDestination")
   userSchedulesOrigin UserSchedule[] @relation("StationOriginSchedule")
   userSchedulesDestination UserSchedule[] @relation("StationDestinationSchedule")
-  reportsOrigin Report[] @relation("StationOriginReport")
-  reportsDestination Report[] @relation("StationDestinationReport")
+  reports                   Report[]
   @@unique([name, cityId])
 }
 

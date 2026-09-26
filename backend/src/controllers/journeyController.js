@@ -39,7 +39,10 @@ function validatePlanRequest(body) {
     errors.push('date is not a valid date');
   }
   if (date) {
-    const d = new Date(date);
+    const parts = date.split('-').map(Number);
+    const d = parts.length === 3 && !parts.some(isNaN)
+      ? new Date(parts[0], parts[1] - 1, parts[2], 0, 0, 0, 0)
+      : new Date(date);
     d.setHours(0, 0, 0, 0);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -94,11 +97,12 @@ async function plan(req, res) {
       },
     });
   } catch (err) {
-    if (err.status === 400 || err.status === 404) {
-      return res.status(err.status).json({ error: err.message });
-    }
     console.error('[journeyController] plan error:', err);
-    return res.status(500).json({ error: 'Internal server error' });
+    const statusCode = err.status || err.statusCode || 500;
+    return res.status(statusCode).json({
+      error: err.message || 'Internal server error',
+      ...(err.details && { details: err.details }),
+    });
   }
 }
 

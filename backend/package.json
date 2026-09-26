@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node src/server.js",
+    "test": "node --test test/journey.test.js",
     "prisma": "prisma"
   },
   "dependencies": {
