@@ -408,6 +408,17 @@
   color: #2563EB;
 }
 
+.jp-route-card__badge--fallback {
+  background: #FEF3C7;
+  color: #92400E;
+  margin-left: 8px;
+}
+
+.jp-fallback-note {
+  font-size: 0.8rem;
+  color: #92400E;
+}
+
 .jp-route-card__legs {
   display: flex;
   flex-wrap: wrap;

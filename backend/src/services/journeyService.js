@@ -254,7 +254,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
 
       const scheduleTimes = getScheduleTimes(route, dayType);
 
-            itineraries.push({
+      itineraries.push({
         type: 'direct',
         legs: [leg],
         totalDurationMin: leg.durationMin,
@@ -332,6 +332,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
               transferCount:      1,
               walkingDurationMin: walkingMin,
               scheduleTimes: scheduleTimes1,
+              isEstimated: true,
               originStation,
               destStation,
             });
@@ -350,8 +351,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
   if (itineraries.length === 0) {
     const origName = originStation.name || `Stasiun ${originStationId}`;
     const destName = destStation.name || `Stasiun ${destinationStationId}`;
-
-        // 1. Fastest / Multi-modal (KRL + MRT)
+    // 1. Fastest / Multi-modal (KRL + MRT)
     itineraries.push({
       type: '1_transfer',
       isFallback: true,
@@ -405,8 +405,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
       originStation,
       destStation,
     });
-
-        // 2. Minimal Transfer (Direct KRL)
+    // 2. Minimal Transfer (Direct KRL)
     itineraries.push({
       type: 'direct',
       isFallback: true,
@@ -440,8 +439,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
       originStation,
       destStation,
     });
-
-        // 3. Cheapest (TransJakarta BRT)
+    // 3. Cheapest (TransJakarta BRT)
     itineraries.push({
       type: 'direct',
       isFallback: true,
@@ -474,8 +472,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
       originStation,
       destStation,
     });
-
-        // 4. Most Comfortable (LRT Jabodebek + MRT)
+    // 4. Most Comfortable (LRT Jabodebek + MRT)
     itineraries.push({
       type: '1_transfer',
       isFallback: true,

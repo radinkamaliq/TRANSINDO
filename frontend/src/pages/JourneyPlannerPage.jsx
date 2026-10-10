@@ -94,8 +94,8 @@ export default function JourneyPlannerPage() {
 
   // Set document title
   useEffect(() => {
-    document.title = 'Journey Planner â€” TRANSIT Jabodetabek';
-    return () => { document.title = 'TRANSIT â€” Jabodetabek Mobility Planner'; };
+    document.title = 'Journey Planner "” TRANSIT Jabodetabek';
+    return () => { document.title = 'TRANSIT "” Jabodetabek Mobility Planner'; };
   }, []);
 
   // Close dropdowns on outside click
@@ -262,7 +262,7 @@ export default function JourneyPlannerPage() {
 
   return (
     <div className="jp-page">
-      {/* â”€â”€â”€ Hero / Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ─── Hero / Header ──────────────────────────────────────────── */}
       <header className="jp-hero" role="banner">
         <div className="jp-hero__inner">
           <h1 className="jp-hero__title" id="jp-title">Sampai tepat waktu, tanpa ribet.</h1>
@@ -270,7 +270,7 @@ export default function JourneyPlannerPage() {
             Cari rute transportasi umum Jabodetabek, tentukan target waktu tiba, dan dapatkan rekomendasi perjalanan yang mudah diikuti.
           </p>
 
-          {/* â”€â”€â”€ Search Form Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+          {/* ─── Search Form Card ─────────────────────────────── */}
           <section className="jp-card" aria-labelledby="jp-form-heading">
             <h2 id="jp-form-heading" className="sr-only">
               Form Pencarian Perjalanan Jabodetabek
@@ -523,7 +523,7 @@ export default function JourneyPlannerPage() {
         </div>
       </header>
 
-      {/* â”€â”€â”€ Results Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ─── Results Section ──────────────────────────────────────── */}
       <main className="jp-results" role="region" aria-live="polite">
         {/* Error State */}
         {error && (
@@ -551,14 +551,14 @@ export default function JourneyPlannerPage() {
             {recommendation && (
               <section className="jp-recommendation" aria-labelledby="recom-title">
                 <span className="jp-recommendation__badge">
-                  â­ Rekomendasi Terpilih ({PREFERENCES.find(p => p.id === preference)?.label || 'Terbaik'})
+                  ⭐ Rekomendasi Terpilih ({PREFERENCES.find(p => p.id === preference)?.label || 'Terbaik'})
                 </span>
                 <div id="recom-title" className="jp-recommendation__depart">
                   Sebaiknya berangkat {recommendation.recommendedDeparture}
                 </div>
                 <div className="jp-recommendation__meta">
-                  Tiba {recommendation.expectedArrival} Â· Durasi {formatDuration(recommendation.totalDurationMin)} Â·{' '}
-                  {recommendation.transferCount === 0 ? 'Langsung tanpa transit' : `${recommendation.transferCount} transit`} Â·{' '}
+                  Tiba {recommendation.expectedArrival} · Durasi {formatDuration(recommendation.totalDurationMin)} ·{' '}
+                  {recommendation.transferCount === 0 ? 'Langsung tanpa transit' : `${recommendation.transferCount} transit`} ·{' '}
                   {formatRupiah(recommendation.totalFare)}
                 </div>
                 <div className="jp-recommendation__buffer">
@@ -624,6 +624,9 @@ export default function JourneyPlannerPage() {
                       </div>
                       {badgeLabel && (
                         <span className="jp-route-card__badge">{badgeLabel}</span>
+                      )}
+                      {route.isFallback && (
+                        <span className="jp-route-card__badge jp-route-card__badge--fallback">Estimasi</span>
                       )}
                     </div>
 
@@ -695,7 +698,7 @@ export default function JourneyPlannerPage() {
         )}
       </main>
 
-      {/* â”€â”€â”€ Route Timeline Sheet / Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ─── Route Timeline Sheet / Modal ─────────────────────────── */}
       {selectedRouteForDetail && (
         <div
           className="jp-timeline-overlay"
@@ -712,7 +715,12 @@ export default function JourneyPlannerPage() {
             <div className="jp-timeline-sheet__header">
               <h3 id="tl-sheet-title" className="jp-timeline-sheet__title">
                                 Detail Perjalanan ({selectedRouteForDetail.recommendedDeparture} → {selectedRouteForDetail.expectedArrival})
-              </h3>
+                            </h3>
+              {selectedRouteForDetail.isFallback && (
+                <div className="jp-fallback-note" style={{ marginTop: 8, padding: '8px 12px', background: '#FEF3C7', borderRadius: 6, fontSize: '0.8rem', color: '#92400E' }}>
+                  <AlertCircle size={14} style={{ display: 'inline', marginRight: 4 }} /> ⚠️ Perkiraan durasi dan tarif berdasarkan rute contoh, bukan jadwal aktual.
+                </div>
+              )}
               <button
                 type="button"
                 className="jp-timeline-close"
