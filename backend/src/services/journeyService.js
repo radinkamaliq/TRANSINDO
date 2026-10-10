@@ -254,7 +254,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
 
       const scheduleTimes = getScheduleTimes(route, dayType);
 
-      itineraries.push({
+            itineraries.push({
         type: 'direct',
         legs: [leg],
         totalDurationMin: leg.durationMin,
@@ -262,6 +262,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
         transferCount: 0,
         walkingDurationMin: 0,
         scheduleTimes,
+        isEstimated: true,
         originStation,
         destStation,
       });
@@ -350,35 +351,37 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
     const origName = originStation.name || `Stasiun ${originStationId}`;
     const destName = destStation.name || `Stasiun ${destinationStationId}`;
 
-    // 1. Fastest / Multi-modal (KRL + MRT)
+        // 1. Fastest / Multi-modal (KRL + MRT)
     itineraries.push({
       type: '1_transfer',
+      isFallback: true,
       legs: [
         {
           routeId: '101',
-          routeName: 'KRL Commuter Line Bekasi - Manggarai',
+          routeName: 'KRL Commuter Line',
           routeCode: 'KRL-BKS',
-          directionLabel: 'Tujuan Manggarai / Jakarta Kota',
+          directionLabel: 'Tujuan Dukuh Atas',
           transportType: 'KRL Commuter Line',
           transportCategory: 'rail',
           operator: 'KAI Commuter',
           fromStop: { name: origName, station: { name: origName } },
-          toStop: { name: 'Stasiun Transit Manggarai', station: { name: 'Stasiun Manggarai' } },
+          toStop: { name: 'Stasiun Transit Dukuh Atas', station: { name: 'Stasiun Dukuh Atas' } },
           durationMin: 35,
           fare: 4000,
+          isEstimated: true,
           stops: [
             { stopName: origName, stationName: origName, seq: 1, travelFromPrev: 0 },
             { stopName: 'Stasiun Kranji', stationName: 'Stasiun Kranji', seq: 2, travelFromPrev: 7 },
             { stopName: 'Stasiun Cakung', stationName: 'Stasiun Cakung', seq: 3, travelFromPrev: 8 },
             { stopName: 'Stasiun Jatinegara', stationName: 'Stasiun Jatinegara', seq: 4, travelFromPrev: 10 },
-            { stopName: 'Stasiun Transit Manggarai', stationName: 'Stasiun Manggarai', seq: 5, travelFromPrev: 10 },
+            { stopName: 'Stasiun Transit Dukuh Atas', stationName: 'Stasiun Dukuh Atas', seq: 5, travelFromPrev: 10 },
           ],
         },
         {
           routeId: '201',
           routeName: 'MRT Jakarta Lin Utara - Selatan',
           routeCode: 'MRT-NS',
-          directionLabel: 'Tujuan Lebak Bulus / Bundaran HI',
+          directionLabel: `Tujuan ${destName}`,
           transportType: 'MRT Jakarta',
           transportCategory: 'rail',
           operator: 'PT MRT Jakarta',
@@ -386,6 +389,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
           toStop: { name: destName, station: { name: destName } },
           durationMin: 18,
           fare: 4500,
+          isEstimated: true,
           stops: [
             { stopName: 'Stasiun Transit Dukuh Atas', stationName: 'Stasiun Dukuh Atas', seq: 1, travelFromPrev: 0 },
             { stopName: 'Stasiun Setiabudi Astra', stationName: 'Stasiun Setiabudi', seq: 2, travelFromPrev: 6 },
@@ -397,19 +401,21 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
       totalFare: 8500,
       transferCount: 1,
       walkingDurationMin: 5,
+      isEstimated: true,
       originStation,
       destStation,
     });
 
-    // 2. Minimal Transfer (Direct KRL)
+        // 2. Minimal Transfer (Direct KRL)
     itineraries.push({
       type: 'direct',
+      isFallback: true,
       legs: [
         {
           routeId: '102',
           routeName: 'KRL Commuter Line Lingkar Cikarang',
           routeCode: 'KRL-CKR',
-          directionLabel: 'Tujuan Sudirman / Angke',
+          directionLabel: `Tujuan ${destName}`,
           transportType: 'KRL Commuter Line',
           transportCategory: 'rail',
           operator: 'KAI Commuter',
@@ -417,6 +423,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
           toStop: { name: destName, station: { name: destName } },
           durationMin: 49,
           fare: 4000,
+          isEstimated: true,
           stops: [
             { stopName: origName, stationName: origName, seq: 1, travelFromPrev: 0 },
             { stopName: 'Stasiun Jatinegara', stationName: 'Stasiun Jatinegara', seq: 2, travelFromPrev: 18 },
@@ -429,19 +436,21 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
       totalFare: 4000,
       transferCount: 0,
       walkingDurationMin: 3,
+      isEstimated: true,
       originStation,
       destStation,
     });
 
-    // 3. Cheapest (TransJakarta BRT)
+        // 3. Cheapest (TransJakarta BRT)
     itineraries.push({
       type: 'direct',
+      isFallback: true,
       legs: [
         {
           routeId: '301',
           routeName: 'TransJakarta Koridor Ekspres',
           routeCode: 'TJ-EXP',
-          directionLabel: 'Tujuan Koridor Utama',
+          directionLabel: `Tujuan ${destName}`,
           transportType: 'TransJakarta BRT',
           transportCategory: 'brt',
           operator: 'PT Transportasi Jakarta',
@@ -449,6 +458,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
           toStop: { name: `Halte ${destName}`, station: { name: destName } },
           durationMin: 72,
           fare: 3500,
+          isEstimated: true,
           stops: [
             { stopName: `Halte ${origName}`, stationName: origName, seq: 1, travelFromPrev: 0 },
             { stopName: 'Halte BNN Cawang', stationName: 'Stasiun Cawang', seq: 2, travelFromPrev: 32 },
@@ -460,13 +470,15 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
       totalFare: 3500,
       transferCount: 0,
       walkingDurationMin: 8,
+      isEstimated: true,
       originStation,
       destStation,
     });
 
-    // 4. Most Comfortable (LRT Jabodebek + MRT)
+        // 4. Most Comfortable (LRT Jabodebek + MRT)
     itineraries.push({
       type: '1_transfer',
+      isFallback: true,
       legs: [
         {
           routeId: '401',
@@ -480,6 +492,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
           toStop: { name: 'Stasiun LRT Dukuh Atas', station: { name: 'Stasiun Dukuh Atas' } },
           durationMin: 42,
           fare: 10000,
+          isEstimated: true,
           stops: [
             { stopName: origName, stationName: origName, seq: 1, travelFromPrev: 0 },
             { stopName: 'Stasiun LRT Cikunir', stationName: 'Stasiun Cikunir', seq: 2, travelFromPrev: 14 },
@@ -491,7 +504,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
           routeId: '202',
           routeName: 'MRT Jakarta Lin Selatan',
           routeCode: 'MRT-S',
-          directionLabel: 'Tujuan Pusat Kota',
+          directionLabel: `Tujuan ${destName}`,
           transportType: 'MRT Jakarta',
           transportCategory: 'rail',
           operator: 'PT MRT Jakarta',
@@ -499,6 +512,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
           toStop: { name: destName, station: { name: destName } },
           durationMin: 14,
           fare: 4000,
+          isEstimated: true,
           stops: [
             { stopName: 'Stasiun MRT Dukuh Atas BNI', stationName: 'Stasiun Dukuh Atas', seq: 1, travelFromPrev: 0 },
             { stopName: destName, stationName: destName, seq: 2, travelFromPrev: 14 },
@@ -509,6 +523,7 @@ async function planJourney({ originStationId, destinationStationId, targetTime, 
       totalFare: 14000,
       transferCount: 1,
       walkingDurationMin: 4,
+      isEstimated: true,
       originStation,
       destStation,
     });
