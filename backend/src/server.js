@@ -62,6 +62,14 @@ process.on('uncaughtException', (err) => {
   console.error('[server] Uncaught exception:', err);
 });
 
-app.listen(port, () => {
-  console.log(`✅ TRANSIT backend listening on port ${port}`);
-});
+// Start HTTP server only when run directly (not when imported by Vercel's
+// Express framework adapter, which wraps the app as a serverless function).
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`✅ TRANSIT backend listening on port ${port}`);
+  });
+}
+
+// Export the Express app so Vercel's Express framework adapter can import
+// it and wrap it as a serverless function in production.
+module.exports = app;

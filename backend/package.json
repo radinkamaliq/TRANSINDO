@@ -2,10 +2,13 @@
   "name": "transit-backend",
   "version": "0.1.0",
   "private": true,
+  "main": "src/server.js",
   "scripts": {
     "dev": "node src/server.js",
+    "start": "node src/server.js",
     "test": "node --test test/journey.test.js",
-    "prisma": "prisma"
+    "prisma": "prisma",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "express": "^4.18.2",
