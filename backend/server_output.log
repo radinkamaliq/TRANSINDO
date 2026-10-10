@@ -1,0 +1,265 @@
+✅ TRANSIT backend listening on port 5000
+prisma:error 
+Invalid `prisma.station.findUnique()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:203:22
+
+  200 let destStation = null;
+  201 try {
+  202   [originStation, destStation] = await Promise.all([
+→ 203     prisma.station.findUnique(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.station.findUnique()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:204:22
+
+  201 try {
+  202   [originStation, destStation] = await Promise.all([
+  203     prisma.station.findUnique({ where: { id: BigInt(originStationId) } }),
+→ 204     prisma.station.findUnique(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.stop.findMany()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:40:30
+
+  37 async function getStopsForStation(stationId) {
+  38   if (!stationId) return [];
+  39   try {
+→ 40     return await prisma.stop.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.station.findUnique()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:203:22
+
+  200 let destStation = null;
+  201 try {
+  202   [originStation, destStation] = await Promise.all([
+→ 203     prisma.station.findUnique(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.station.findUnique()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:204:22
+
+  201 try {
+  202   [originStation, destStation] = await Promise.all([
+  203     prisma.station.findUnique({ where: { id: BigInt(originStationId) } }),
+→ 204     prisma.station.findUnique(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.stop.findMany()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:40:30
+
+  37 async function getStopsForStation(stationId) {
+  38   if (!stationId) return [];
+  39   try {
+→ 40     return await prisma.stop.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.stop.findMany()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:40:30
+
+  37 async function getStopsForStation(stationId) {
+  38   if (!stationId) return [];
+  39   try {
+→ 40     return await prisma.stop.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.stop.findMany()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:40:30
+
+  37 async function getStopsForStation(stationId) {
+  38   if (!stationId) return [];
+  39   try {
+→ 40     return await prisma.stop.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.station.findUnique()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:203:22
+
+  200 let destStation = null;
+  201 try {
+  202   [originStation, destStation] = await Promise.all([
+→ 203     prisma.station.findUnique(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.station.findUnique()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:204:22
+
+  201 try {
+  202   [originStation, destStation] = await Promise.all([
+  203     prisma.station.findUnique({ where: { id: BigInt(originStationId) } }),
+→ 204     prisma.station.findUnique(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.stop.findMany()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:40:30
+
+  37 async function getStopsForStation(stationId) {
+  38   if (!stationId) return [];
+  39   try {
+→ 40     return await prisma.stop.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.stop.findMany()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:40:30
+
+  37 async function getStopsForStation(stationId) {
+  38   if (!stationId) return [];
+  39   try {
+→ 40     return await prisma.stop.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.station.findUnique()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:203:22
+
+  200 let destStation = null;
+  201 try {
+  202   [originStation, destStation] = await Promise.all([
+→ 203     prisma.station.findUnique(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.station.findUnique()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:204:22
+
+  201 try {
+  202   [originStation, destStation] = await Promise.all([
+  203     prisma.station.findUnique({ where: { id: BigInt(originStationId) } }),
+→ 204     prisma.station.findUnique(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.stop.findMany()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:40:30
+
+  37 async function getStopsForStation(stationId) {
+  38   if (!stationId) return [];
+  39   try {
+→ 40     return await prisma.stop.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.stop.findMany()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:40:30
+
+  37 async function getStopsForStation(stationId) {
+  38   if (!stationId) return [];
+  39   try {
+→ 40     return await prisma.stop.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.station.findUnique()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:203:22
+
+  200 let destStation = null;
+  201 try {
+  202   [originStation, destStation] = await Promise.all([
+→ 203     prisma.station.findUnique(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.station.findUnique()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:204:22
+
+  201 try {
+  202   [originStation, destStation] = await Promise.all([
+  203     prisma.station.findUnique({ where: { id: BigInt(originStationId) } }),
+→ 204     prisma.station.findUnique(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.stop.findMany()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:40:30
+
+  37 async function getStopsForStation(stationId) {
+  38   if (!stationId) return [];
+  39   try {
+→ 40     return await prisma.stop.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.stop.findMany()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:40:30
+
+  37 async function getStopsForStation(stationId) {
+  38   if (!stationId) return [];
+  39   try {
+→ 40     return await prisma.stop.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.station.findUnique()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:203:22
+
+  200 let destStation = null;
+  201 try {
+  202   [originStation, destStation] = await Promise.all([
+→ 203     prisma.station.findUnique(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.station.findUnique()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:204:22
+
+  201 try {
+  202   [originStation, destStation] = await Promise.all([
+  203     prisma.station.findUnique({ where: { id: BigInt(originStationId) } }),
+→ 204     prisma.station.findUnique(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.stop.findMany()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:40:30
+
+  37 async function getStopsForStation(stationId) {
+  38   if (!stationId) return [];
+  39   try {
+→ 40     return await prisma.stop.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+prisma:error 
+Invalid `prisma.stop.findMany()` invocation in
+D:\Belajar\transit-jabodetabek\backend\src\services\journeyService.js:40:30
+
+  37 async function getStopsForStation(stationId) {
+  38   if (!stationId) return [];
+  39   try {
+→ 40     return await prisma.stop.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.

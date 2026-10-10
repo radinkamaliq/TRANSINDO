@@ -1,4 +1,4 @@
-// src/pages/JourneyPlannerPage.jsx
+﻿// src/pages/JourneyPlannerPage.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import {
   MapPin,
@@ -10,17 +10,23 @@ import {
   Train,
   Bus,
   Footprints,
+  Zap,
+  Wallet,
+  RefreshCw,
+  Star,
+  Compass,
+  Flag,
 } from 'lucide-react';
 import { planJourney, searchStations } from '../utils/journeyApi';
 import '../styles/journeyPlanner.css';
 
 // Preference chip options per style.md
 const PREFERENCES = [
-  { id: 'fastest', label: 'Tercepat', icon: '⚡' },
-  { id: 'cheapest', label: 'Termurah', icon: '💰' },
-  { id: 'min_transfer', label: 'Minim Transit', icon: '🔄' },
-  { id: 'min_walk', label: 'Minim Jalan Kaki', icon: '🚶' },
-  { id: 'most_comfortable', label: 'Paling Nyaman', icon: '✨' },
+  { id: 'fastest',        label: 'Tercepat',           icon: <Zap size={16} /> },
+  { id: 'cheapest',        label: 'Termurah',           icon: <Wallet size={16} /> },
+  { id: 'min_transfer',    label: 'Minim Transit',      icon: <RefreshCw size={16} /> },
+  { id: 'min_walk',        label: 'Minim Jalan Kaki',   icon: <Footprints size={16} /> },
+  { id: 'most_comfortable', label: 'Paling Nyaman', icon: <Star size={16} /> },
 ];
 
 function formatDuration(minutes) {
@@ -88,8 +94,8 @@ export default function JourneyPlannerPage() {
 
   // Set document title
   useEffect(() => {
-    document.title = 'Journey Planner — TRANSIT Jabodetabek';
-    return () => { document.title = 'TRANSIT — Jabodetabek Mobility Planner'; };
+    document.title = 'Journey Planner â€” TRANSIT Jabodetabek';
+    return () => { document.title = 'TRANSIT â€” Jabodetabek Mobility Planner'; };
   }, []);
 
   // Close dropdowns on outside click
@@ -256,7 +262,7 @@ export default function JourneyPlannerPage() {
 
   return (
     <div className="jp-page">
-      {/* ─── Hero / Header ──────────────────────────────────────────── */}
+      {/* â”€â”€â”€ Hero / Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <header className="jp-hero" role="banner">
         <div className="jp-hero__inner">
           <h1 className="jp-hero__title" id="jp-title">Sampai tepat waktu, tanpa ribet.</h1>
@@ -264,7 +270,7 @@ export default function JourneyPlannerPage() {
             Cari rute transportasi umum Jabodetabek, tentukan target waktu tiba, dan dapatkan rekomendasi perjalanan yang mudah diikuti.
           </p>
 
-          {/* ─── Search Form Card ─────────────────────────────── */}
+          {/* â”€â”€â”€ Search Form Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <section className="jp-card" aria-labelledby="jp-form-heading">
             <h2 id="jp-form-heading" className="sr-only">
               Form Pencarian Perjalanan Jabodetabek
@@ -517,7 +523,7 @@ export default function JourneyPlannerPage() {
         </div>
       </header>
 
-      {/* ─── Results Section ──────────────────────────────────────── */}
+      {/* â”€â”€â”€ Results Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <main className="jp-results" role="region" aria-live="polite">
         {/* Error State */}
         {error && (
@@ -545,18 +551,18 @@ export default function JourneyPlannerPage() {
             {recommendation && (
               <section className="jp-recommendation" aria-labelledby="recom-title">
                 <span className="jp-recommendation__badge">
-                  ⭐ Rekomendasi Terpilih ({PREFERENCES.find(p => p.id === preference)?.label || 'Terbaik'})
+                  â­ Rekomendasi Terpilih ({PREFERENCES.find(p => p.id === preference)?.label || 'Terbaik'})
                 </span>
                 <div id="recom-title" className="jp-recommendation__depart">
                   Sebaiknya berangkat {recommendation.recommendedDeparture}
                 </div>
                 <div className="jp-recommendation__meta">
-                  Tiba {recommendation.expectedArrival} · Durasi {formatDuration(recommendation.totalDurationMin)} ·{' '}
-                  {recommendation.transferCount === 0 ? 'Langsung tanpa transit' : `${recommendation.transferCount} transit`} ·{' '}
+                  Tiba {recommendation.expectedArrival} Â· Durasi {formatDuration(recommendation.totalDurationMin)} Â·{' '}
+                  {recommendation.transferCount === 0 ? 'Langsung tanpa transit' : `${recommendation.transferCount} transit`} Â·{' '}
                   {formatRupiah(recommendation.totalFare)}
                 </div>
                 <div className="jp-recommendation__buffer">
-                  🛡️ {recommendation.bufferMin ?? 5} menit buffer keamanan sebelum jadwal target ({targetTime})
+                  ðŸ›¡ï¸ {recommendation.bufferMin ?? 5} menit buffer keamanan sebelum jadwal target ({targetTime})
                 </div>
               </section>
             )}
@@ -610,7 +616,7 @@ export default function JourneyPlannerPage() {
                     <div className="jp-route-card__header">
                       <div>
                         <div className="jp-route-card__times">
-                          {route.recommendedDeparture} <span style={{ color: '#94A3B8' }}>→</span> {route.expectedArrival}
+                          {route.recommendedDeparture} <span style={{ color: '#94A3B8' }}>â†’</span> {route.expectedArrival}
                         </div>
                         <div className="jp-route-card__duration">
                           {formatDuration(route.totalDurationMin)} perjalanan
@@ -656,7 +662,7 @@ export default function JourneyPlannerPage() {
                     <div className="jp-route-card__footer">
                       <div>
                         <strong>{formatRupiah(route.totalFare)}</strong>
-                        <span style={{ margin: '0 6px', color: '#CBD5E1' }}>•</span>
+                        <span style={{ margin: '0 6px', color: '#CBD5E1' }}>â€¢</span>
                         <span>{route.transferCount === 0 ? 'Tanpa transit' : `${route.transferCount} transit`}</span>
                       </div>
                       <button
@@ -677,10 +683,10 @@ export default function JourneyPlannerPage() {
           </>
         )}
 
-        {/* Empty State */}
+                {/* Empty State */}
         {!loading && hasSearched && (!results || results.length === 0) && !error && (
           <div className="jp-empty">
-            <div className="jp-empty__icon">🧭</div>
+            <div className="jp-empty__icon"><Compass size={32} /></div>
             <div className="jp-empty__title">Tidak Ada Rute yang Tersedia</div>
             <p>
               Tidak ditemukan jadwal perjalanan langsung antara stasiun yang dipilih pada waktu tersebut. Coba pilih stasiun transit atau geser waktu keberangkatan.
@@ -689,7 +695,7 @@ export default function JourneyPlannerPage() {
         )}
       </main>
 
-      {/* ─── Route Timeline Sheet / Modal ─────────────────────────── */}
+      {/* â”€â”€â”€ Route Timeline Sheet / Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {selectedRouteForDetail && (
         <div
           className="jp-timeline-overlay"
@@ -705,7 +711,7 @@ export default function JourneyPlannerPage() {
           >
             <div className="jp-timeline-sheet__header">
               <h3 id="tl-sheet-title" className="jp-timeline-sheet__title">
-                Detail Perjalanan ({selectedRouteForDetail.recommendedDeparture} → {selectedRouteForDetail.expectedArrival})
+                Detail Perjalanan ({selectedRouteForDetail.recommendedDeparture} â†’ {selectedRouteForDetail.expectedArrival})
               </h3>
               <button
                 type="button"
@@ -719,10 +725,10 @@ export default function JourneyPlannerPage() {
 
             {/* Timeline View */}
             <div className="jp-timeline">
-              {/* Departure Start */}
+            {/* Departure Start */}
               <div className="jp-tl-item">
                 <div className="jp-tl-dot jp-tl-dot--origin" aria-hidden="true">
-                  📍
+                  <MapPin size={16} />
                 </div>
                 <div className="jp-tl-content">
                   <div className="jp-tl-time">{selectedRouteForDetail.recommendedDeparture}</div>
@@ -737,10 +743,10 @@ export default function JourneyPlannerPage() {
               {selectedRouteForDetail.legs.map((leg, idx) => {
                 const cat = (leg.transportCategory || 'rail').toLowerCase();
                 let dotClass = 'jp-tl-dot--rail';
-                let iconChar = '🚆';
+                let Icon = Train;
                 if (cat === 'brt' || cat === 'bus') {
                   dotClass = 'jp-tl-dot--brt';
-                  iconChar = '🚌';
+                  Icon = Bus;
                 }
 
                 return (
@@ -748,15 +754,15 @@ export default function JourneyPlannerPage() {
                     {/* Leg Departure */}
                     <div className="jp-tl-item">
                       <div className={`jp-tl-dot ${dotClass}`} aria-hidden="true">
-                        {iconChar}
+                        <Icon size={16} />
                       </div>
                       <div className="jp-tl-content">
                         <div className="jp-tl-time">Naik {leg.transportType}</div>
                         <div className="jp-tl-name">{leg.routeName}</div>
                         <div className="jp-tl-meta">
-                          {leg.operator && `Operator: ${leg.operator} • `}
-                          {leg.directionLabel && `${leg.directionLabel} • `}
-                          Durasi: {formatDuration(leg.durationMin)} • Tarif: {formatRupiah(leg.fare)}
+                          {leg.operator && `Operator: ${leg.operator} â€¢ `}
+                          {leg.directionLabel && `${leg.directionLabel} â€¢ `}
+                          Durasi: {formatDuration(leg.durationMin)} â€¢ Tarif: {formatRupiah(leg.fare)}
                         </div>
 
                         {/* Sub-stops in leg */}
@@ -764,7 +770,7 @@ export default function JourneyPlannerPage() {
                           <div style={{ marginTop: 8, paddingLeft: 8, borderLeft: '2px dashed #E2E8F0', fontSize: '0.8rem', color: '#64748B' }}>
                             {leg.stops.map((stop, sIdx) => (
                               <div key={sIdx} style={{ padding: '2px 0' }}>
-                                • {stop.stopName || stop.stationName}
+                                â€¢ {stop.stopName || stop.stationName}
                               </div>
                             ))}
                           </div>
@@ -776,7 +782,7 @@ export default function JourneyPlannerPage() {
                     {idx < selectedRouteForDetail.legs.length - 1 && (
                       <div className="jp-tl-item">
                         <div className="jp-tl-dot jp-tl-dot--transfer" aria-hidden="true">
-                          🔄
+                          <RefreshCw size={16} />
                         </div>
                         <div className="jp-tl-content">
                           <div className="jp-tl-time">Transit & Pindah Peron</div>
@@ -796,7 +802,7 @@ export default function JourneyPlannerPage() {
               {/* Arrival Destination */}
               <div className="jp-tl-item">
                 <div className="jp-tl-dot jp-tl-dot--destination" aria-hidden="true">
-                  🏁
+                  <Flag size={16} />
                 </div>
                 <div className="jp-tl-content">
                   <div className="jp-tl-time">{selectedRouteForDetail.expectedArrival}</div>
@@ -827,3 +833,4 @@ export default function JourneyPlannerPage() {
     </div>
   );
 }
+

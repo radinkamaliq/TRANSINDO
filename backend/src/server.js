@@ -51,6 +51,17 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Process-level safety nets — prevent unhandled rejections / exceptions from
+// crashing the server (e.g. Prisma connection pool errors when PostgreSQL is
+// offline).  Without these handlers Node.js may terminate the process.
+process.on('unhandledRejection', (reason, promise) => {
+  console.warn('[server] Unhandled Promise rejection:', reason?.message || reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('[server] Uncaught exception:', err);
+});
+
 app.listen(port, () => {
   console.log(`✅ TRANSIT backend listening on port ${port}`);
 });
