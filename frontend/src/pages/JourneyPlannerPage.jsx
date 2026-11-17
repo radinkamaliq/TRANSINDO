@@ -1,5 +1,5 @@
-// src/pages/JourneyPlannerPage.jsx
-import React, { useState, useEffect, useRef } from 'react';
+﻿// src/pages/JourneyPlannerPage.jsx
+import React, { useState, useEffect, useRef } from 'react';, useCallback
 import {
   MapPin,
   ArrowUpDown,
@@ -16,6 +16,7 @@ import {
   Star,
   Compass,
   Flag,
+  useNavigate,
 } from 'lucide-react';
 import { planJourney, searchStations } from '../utils/journeyApi';
 import '../styles/journeyPlanner.css';
@@ -94,8 +95,8 @@ export default function JourneyPlannerPage() {
 
   // Set document title
   useEffect(() => {
-    document.title = 'Journey Planner "” TRANSIT Jabodetabek';
-    return () => { document.title = 'TRANSIT "” Jabodetabek Mobility Planner'; };
+    document.title = 'Journey Planner "â€ TRANSIT Jabodetabek';
+    return () => { document.title = 'TRANSIT "â€ Jabodetabek Mobility Planner'; };
   }, []);
 
   // Close dropdowns on outside click
@@ -255,6 +256,27 @@ export default function JourneyPlannerPage() {
     }
   };
 
+  const handleShowOnMap = () => {
+    if (!selectedRouteForDetail) return;
+
+    const routePayload = {
+      originName: selectedOrigin?.name || selectedRouteForDetail.originStation?.name || 'Stasiun Asal',
+      destName: selectedDest?.name || selectedRouteForDetail.destStation?.name || 'Stasiun Tujuan',
+      legs: (selectedRouteForDetail.legs || []).map((leg) => ({
+        transportType: leg.transportType || leg.routeName,
+        routeName: leg.routeName,
+        stops: (leg.stops || []).map((stop) => ({
+          stationName: stop.stationName || stop.stopName || ''
+        })),
+      })
+    };
+
+    const params = new URLSearchParams();
+    params.set('route', btoa(JSON.stringify(routePayload)));
+    params.set('source', 'journey-planner');
+    navigate(/? + params.toString());
+  };
+
   // Initial plan load so page has rich results ready
   useEffect(() => {
     handleSearch();
@@ -262,7 +284,7 @@ export default function JourneyPlannerPage() {
 
   return (
     <div className="jp-page">
-      {/* ─── Hero / Header ──────────────────────────────────────────── */}
+      {/* â”€â”€â”€ Hero / Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <header className="jp-hero" role="banner">
         <div className="jp-hero__inner">
           <h1 className="jp-hero__title" id="jp-title">Sampai tepat waktu, tanpa ribet.</h1>
@@ -270,7 +292,7 @@ export default function JourneyPlannerPage() {
             Cari rute transportasi umum Jabodetabek, tentukan target waktu tiba, dan dapatkan rekomendasi perjalanan yang mudah diikuti.
           </p>
 
-          {/* ─── Search Form Card ─────────────────────────────── */}
+          {/* â”€â”€â”€ Search Form Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <section className="jp-card" aria-labelledby="jp-form-heading">
             <h2 id="jp-form-heading" className="sr-only">
               Form Pencarian Perjalanan Jabodetabek
@@ -523,7 +545,7 @@ export default function JourneyPlannerPage() {
         </div>
       </header>
 
-      {/* ─── Results Section ──────────────────────────────────────── */}
+      {/* â”€â”€â”€ Results Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <main className="jp-results" role="region" aria-live="polite">
         {/* Error State */}
         {error && (
@@ -551,18 +573,18 @@ export default function JourneyPlannerPage() {
             {recommendation && (
               <section className="jp-recommendation" aria-labelledby="recom-title">
                 <span className="jp-recommendation__badge">
-                  ⭐ Rekomendasi Terpilih ({PREFERENCES.find(p => p.id === preference)?.label || 'Terbaik'})
+                  â­ Rekomendasi Terpilih ({PREFERENCES.find(p => p.id === preference)?.label || 'Terbaik'})
                 </span>
                 <div id="recom-title" className="jp-recommendation__depart">
                   Sebaiknya berangkat {recommendation.recommendedDeparture}
                 </div>
                 <div className="jp-recommendation__meta">
-                  Tiba {recommendation.expectedArrival} · Durasi {formatDuration(recommendation.totalDurationMin)} ·{' '}
-                  {recommendation.transferCount === 0 ? 'Langsung tanpa transit' : `${recommendation.transferCount} transit`} ·{' '}
+                  Tiba {recommendation.expectedArrival} Â· Durasi {formatDuration(recommendation.totalDurationMin)} Â·{' '}
+                  {recommendation.transferCount === 0 ? 'Langsung tanpa transit' : `${recommendation.transferCount} transit`} Â·{' '}
                   {formatRupiah(recommendation.totalFare)}
                 </div>
                 <div className="jp-recommendation__buffer">
-                  ðŸ›¡ï¸ {recommendation.bufferMin ?? 5} menit buffer keamanan sebelum jadwal target ({targetTime})
+                  Ã°Å¸â€ºÂ¡Ã¯Â¸Â {recommendation.bufferMin ?? 5} menit buffer keamanan sebelum jadwal target ({targetTime})
                 </div>
               </section>
             )}
@@ -616,7 +638,7 @@ export default function JourneyPlannerPage() {
                     <div className="jp-route-card__header">
                       <div>
                         <div className="jp-route-card__times">
-                                              {route.recommendedDeparture} <span style={{ color: '#94A3B8' }}>→</span> {route.expectedArrival}
+                                              {route.recommendedDeparture} <span style={{ color: '#94A3B8' }}>â†’</span> {route.expectedArrival}
                         </div>
                         <div className="jp-route-card__duration">
                           {formatDuration(route.totalDurationMin)} perjalanan
@@ -665,7 +687,7 @@ export default function JourneyPlannerPage() {
                     <div className="jp-route-card__footer">
                       <div>
                         <strong>{formatRupiah(route.totalFare)}</strong>
-                        <span style={{ margin: '0 6px', color: '#CBD5E1' }}>•</span>
+                        <span style={{ margin: '0 6px', color: '#CBD5E1' }}>â€¢</span>
                         <span>{route.transferCount === 0 ? 'Tanpa transit' : `${route.transferCount} transit`}</span>
                       </div>
                       <button
@@ -698,7 +720,7 @@ export default function JourneyPlannerPage() {
         )}
       </main>
 
-      {/* ─── Route Timeline Sheet / Modal ─────────────────────────── */}
+      {/* â”€â”€â”€ Route Timeline Sheet / Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {selectedRouteForDetail && (
         <div
           className="jp-timeline-overlay"
@@ -714,21 +736,353 @@ export default function JourneyPlannerPage() {
           >
             <div className="jp-timeline-sheet__header">
               <h3 id="tl-sheet-title" className="jp-timeline-sheet__title">
-                                Detail Perjalanan ({selectedRouteForDetail.recommendedDeparture} → {selectedRouteForDetail.expectedArrival})
+                                Detail Perjalanan ({selectedRouteForDetail.recommendedDeparture} â†’ {selectedRouteForDetail.expectedArrival})
                             </h3>
               {selectedRouteForDetail.isFallback && (
                 <div className="jp-fallback-note" style={{ marginTop: 8, padding: '8px 12px', background: '#FEF3C7', borderRadius: 6, fontSize: '0.8rem', color: '#92400E' }}>
-                  <AlertCircle size={14} style={{ display: 'inline', marginRight: 4 }} /> ⚠️ Perkiraan durasi dan tarif berdasarkan rute contoh, bukan jadwal aktual.
+                  <AlertCircle size={14} style={{ display: 'inline', marginRight: 4 }} /> âš ï¸ Perkiraan durasi dan tarif berdasarkan rute contoh, bukan jadwal aktual.
                 </div>
               )}
-              <button
-                type="button"
-                className="jp-timeline-close"
-                onClick={() => setSelectedRouteForDetail(null)}
-                aria-label="Tutup detail perjalanan"
-              >
-                <X size={18} />
-              </button>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
+<button
+  type="button"
+  className="jp-timeline-close"
+  onClick={() => setSelectedRouteForDetail(null)}
+  aria-label="Tutup detail perjalanan"
+>
+  <X size={18} />
+</button>
+<button
+  type="button"
+  className="jp-timeline-btn"
+  onClick={handleShowOnMap}
+  aria-label="Tampilkan rute di peta geografis"
+>
+  <MapPin size={16} /> Tampilkan di Peta
+</button>
+</div>
             </div>
 
             {/* Timeline View */}
@@ -768,9 +1122,9 @@ export default function JourneyPlannerPage() {
                         <div className="jp-tl-time">Naik {leg.transportType}</div>
                         <div className="jp-tl-name">{leg.routeName}</div>
                         <div className="jp-tl-meta">
-                                                    {leg.operator && `Operator: ${leg.operator} • `}
-                                                    {leg.directionLabel && `${leg.directionLabel} • `}
-                                                    Durasi: {formatDuration(leg.durationMin)} • Tarif: {formatRupiah(leg.fare)}
+                                                    {leg.operator && `Operator: ${leg.operator} â€¢ `}
+                                                    {leg.directionLabel && `${leg.directionLabel} â€¢ `}
+                                                    Durasi: {formatDuration(leg.durationMin)} â€¢ Tarif: {formatRupiah(leg.fare)}
                         </div>
 
                         {/* Sub-stops in leg */}
@@ -778,7 +1132,7 @@ export default function JourneyPlannerPage() {
                           <div style={{ marginTop: 8, paddingLeft: 8, borderLeft: '2px dashed #E2E8F0', fontSize: '0.8rem', color: '#64748B' }}>
                             {leg.stops.map((stop, sIdx) => (
                               <div key={sIdx} style={{ padding: '2px 0' }}>
-                                                                • {stop.stopName || stop.stationName}
+                                                                â€¢ {stop.stopName || stop.stationName}
                               </div>
                             ))}
                           </div>
@@ -831,6 +1185,8 @@ export default function JourneyPlannerPage() {
                 className="jp-route-card__detail-btn"
                 style={{ background: '#2563EB', color: '#fff', borderColor: '#2563EB', padding: '10px 20px', fontWeight: 600 }}
                 onClick={() => setSelectedRouteForDetail(null)}
+                className="type-button" data-txp-id="x" 
+              ></button>
               >
                 Tutup Detail
               </button>
@@ -841,4 +1197,8 @@ export default function JourneyPlannerPage() {
     </div>
   );
 }
+
+
+
+
 

@@ -1,4 +1,4 @@
-// src/pages/HomePage.jsx
+﻿// src/pages/HomePage.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -21,6 +21,7 @@ import {
   CheckCircle2,
   AlertTriangle
 } from 'lucide-react';
+import TransitMap from '../components/TransitMap';
 import './HomePage.css';
 
 export default function HomePage() {
@@ -47,9 +48,10 @@ export default function HomePage() {
     transitHub: true,
     zone: 'Transit Utama (Central Hub)'
   });
+  const [selectedRoute, setSelectedRoute] = useState(null);
 
   useEffect(() => {
-    document.title = 'TRANSIT — Jabodetabek Mobility Planner';
+    document.title = 'TRANSIT â€” Jabodetabek Mobility Planner';
   }, []);
 
   // Swap Origin and Destination
@@ -78,7 +80,7 @@ export default function HomePage() {
 
   return (
     <div className="home-page">
-      {/* ─── 1. NAVBAR ─────────────────────────────────────────────────── */}
+      {/* â”€â”€â”€ 1. NAVBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <header className="home-navbar">
         <div className="container navbar-container">
           <Link to="/" className="brand-group">
@@ -184,7 +186,7 @@ export default function HomePage() {
         )}
       </header>
 
-      {/* ─── 2. HERO SECTION ───────────────────────────────────────────── */}
+      {/* â”€â”€â”€ 2. HERO SECTION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="hero-section">
         <div className="container hero-grid">
           <div className="hero-left">
@@ -224,7 +226,25 @@ export default function HomePage() {
             </div>
 
             <div className="network-svg-wrap">
-              <svg viewBox="0 0 340 180" className="network-svg">
+      {/* ─── 7. MAP PREVIEW ────────────────────────────────────────────── */}
+      <section className="map-preview-section" id="map-preview">
+        <div className="container">
+          <div className="section-tag">
+            <Layers size={14} /> Peta Geografis
+          </div>
+          <h2 className="section-title">Peta Geografis Jabodetabek</h2>
+          <p className="section-desc">
+            Peta interaktif berbasis tile geografis OpenStreetMap. Transparansi: bukan pelacak GPS live dan bukan pelacakan armada.
+          </p>
+
+          <TransitMap
+            selectedStation={selectedStation}
+            onStationSelect={setSelectedStation}
+            selectedRoute={selectedRoute}
+          />
+        </div>
+      </section>
+
                 <defs>
                   <linearGradient id="gradKrl" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stopColor="#4F46E5" />
@@ -306,7 +326,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── 3. JOURNEY PLANNER PREVIEW CARD ────────────────────────────── */}
+      {/* â”€â”€â”€ 3. JOURNEY PLANNER PREVIEW CARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="planner-preview-section container">
         <div className="planner-preview-card">
           <div className="planner-card-header">
@@ -428,35 +448,35 @@ export default function HomePage() {
                   className={`pref-chip ${preference === 'fastest' ? 'active' : ''}`}
                   onClick={() => setPreference('fastest')}
                 >
-                  ⚡ Tercepat
+                  âš¡ Tercepat
                 </button>
                 <button
                   type="button"
                   className={`pref-chip ${preference === 'cheapest' ? 'active' : ''}`}
                   onClick={() => setPreference('cheapest')}
                 >
-                  💰 Termurah
+                  ðŸ’° Termurah
                 </button>
                 <button
                   type="button"
                   className={`pref-chip ${preference === 'min_transfer' ? 'active' : ''}`}
                   onClick={() => setPreference('min_transfer')}
                 >
-                  🔄 Minim Transit
+                  ðŸ”„ Minim Transit
                 </button>
                 <button
                   type="button"
                   className={`pref-chip ${preference === 'min_walk' ? 'active' : ''}`}
                   onClick={() => setPreference('min_walk')}
                 >
-                  🚶 Minim Jalan Kaki
+                  ðŸš¶ Minim Jalan Kaki
                 </button>
                 <button
                   type="button"
                   className={`pref-chip ${preference === 'most_comfortable' ? 'active' : ''}`}
                   onClick={() => setPreference('most_comfortable')}
                 >
-                  ✨ Paling Nyaman
+                  âœ¨ Paling Nyaman
                 </button>
               </div>
 
@@ -466,19 +486,19 @@ export default function HomePage() {
             </div>
 
             <p className="planner-note-text">
-              <Info size={14} /> UI Preview — Menghubungkan langsung ke mesin rekomendasi rute Journey Planner.
+              <Info size={14} /> UI Preview â€” Menghubungkan langsung ke mesin rekomendasi rute Journey Planner.
             </p>
           </form>
         </div>
       </section>
 
-      {/* ─── 4. ARRIVE ON TIME FEATURE SECTION ─────────────────────────── */}
+      {/* â”€â”€â”€ 4. ARRIVE ON TIME FEATURE SECTION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="aot-section">
         <div className="container">
           <div className="section-tag">
             <Clock size={14} /> Fitur Unggulan
           </div>
-          <h2 className="section-title">Arrive On Time — Jangan Sampai Terlambat</h2>
+          <h2 className="section-title">Arrive On Time â€” Jangan Sampai Terlambat</h2>
           <p className="section-desc">
             Bukan sekadar rute dari A ke B. TRANSIT menghitung mundur jam berangkat ideal berdasarkan target waktu tiba Anda di kantor, kampus, atau tempat pertemuan.
           </p>
@@ -536,19 +556,19 @@ export default function HomePage() {
                 <div className="aot-departure-highlight">Sebaiknya berangkat 06:25</div>
                 <div className="aot-sub-metrics">
                   <span>Tiba 07:38</span>
-                  <span>•</span>
+                  <span>â€¢</span>
                   <span>Durasi 1j 13m</span>
-                  <span>•</span>
+                  <span>â€¢</span>
                   <span className="text-primary font-bold">Transit 1x</span>
                 </div>
               </div>
 
               <div className="aot-detail-chips-row">
                 <div className="aot-stat-badge">
-                  <span>💰 Tarif: <strong>Rp8.500</strong></span>
+                  <span>ðŸ’° Tarif: <strong>Rp8.500</strong></span>
                 </div>
                 <div className="aot-stat-badge aot-buffer-badge">
-                  <span>⏱ <strong>Buffer 22 menit</strong> sebelum jam 08:00</span>
+                  <span>â± <strong>Buffer 22 menit</strong> sebelum jam 08:00</span>
                 </div>
               </div>
 
@@ -575,14 +595,14 @@ export default function HomePage() {
               </div>
 
               <p className="aot-sample-disclaimer">
-                ⚠️ Nilai demo di atas adalah data contoh pengembangan (Development Sample Data).
+                âš ï¸ Nilai demo di atas adalah data contoh pengembangan (Development Sample Data).
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── 5. TRANSPORT MODES ────────────────────────────────────────── */}
+      {/* â”€â”€â”€ 5. TRANSPORT MODES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="modes-section" id="transport-modes">
         <div className="container">
           <div className="section-tag">
@@ -597,7 +617,7 @@ export default function HomePage() {
             {/* KRL */}
             <div className="mode-card" style={{ '--accent-color': '#4F46E5', '--icon-bg': '#EEF2FF' }}>
               <div className="mode-card-top">
-                <div className="mode-icon-box">🚆</div>
+                <div className="mode-icon-box">ðŸš†</div>
                 <span className="mode-tag">Rel Komuter</span>
               </div>
               <h3 className="mode-title">KRL Commuter Line</h3>
@@ -623,7 +643,7 @@ export default function HomePage() {
             {/* MRT */}
             <div className="mode-card" style={{ '--accent-color': '#0284C7', '--icon-bg': '#E0F2FE' }}>
               <div className="mode-card-top">
-                <div className="mode-icon-box">🚇</div>
+                <div className="mode-icon-box">ðŸš‡</div>
                 <span className="mode-tag">MRT Jakarta</span>
               </div>
               <h3 className="mode-title">MRT Jakarta (Ratangga)</h3>
@@ -649,7 +669,7 @@ export default function HomePage() {
             {/* LRT */}
             <div className="mode-card" style={{ '--accent-color': '#7C3AED', '--icon-bg': '#F3E8FF' }}>
               <div className="mode-card-top">
-                <div className="mode-icon-box">🚊</div>
+                <div className="mode-icon-box">ðŸšŠ</div>
                 <span className="mode-tag">LRT Layang</span>
               </div>
               <h3 className="mode-title">LRT Jabodebek & Jakarta</h3>
@@ -675,7 +695,7 @@ export default function HomePage() {
             {/* TransJakarta */}
             <div className="mode-card" style={{ '--accent-color': '#EA580C', '--icon-bg': '#FFEDD5' }}>
               <div className="mode-card-top">
-                <div className="mode-icon-box">🚌</div>
+                <div className="mode-icon-box">ðŸšŒ</div>
                 <span className="mode-tag">Bus Rapid Transit</span>
               </div>
               <h3 className="mode-title">TransJakarta BRT</h3>
@@ -701,7 +721,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── 6. POPULAR ROUTES ─────────────────────────────────────────── */}
+      {/* â”€â”€â”€ 6. POPULAR ROUTES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="routes-section">
         <div className="container">
           <div className="section-tag">
@@ -716,7 +736,7 @@ export default function HomePage() {
             {/* Route 1 */}
             <div className="route-card">
               <div className="route-badge-row">
-                <span className="route-badge badge-primary">⚡ Tercepat Pekerja</span>
+                <span className="route-badge badge-primary">âš¡ Tercepat Pekerja</span>
                 <span className="badge badge-muted">KRL + Transit</span>
               </div>
               <div className="route-path-flow">
@@ -968,7 +988,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── 7. MAP PREVIEW ────────────────────────────────────────────── */}
+      {/* â”€â”€â”€ 7. MAP PREVIEW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="map-preview-section" id="map-preview">
         <div className="container">
           <div className="section-tag">
@@ -979,175 +999,8 @@ export default function HomePage() {
             Visualisasi jalur rel dan halte terintegrasi Jabodetabek. Klik stasiun transit untuk melihat koneksi lintas moda.
           </p>
 
-          <div className="map-card-wrapper">
-            <div className="map-card-top-bar">
-              <div className="map-title-row">
-                <Layers size={18} color="var(--primary, #2563EB)" />
-                <strong>Peta Skematik Jabodetabek</strong>
-                <span className="map-badge-static">Visual Static Map Placeholder</span>
-              </div>
-              <div style={{ display: 'flex', gap: 10 }}>
-                <span className="text-muted text-xs">
-                  (Bukan pelacak GPS live atau tracking armada bergerak)
-                </span>
-              </div>
-            </div>
 
-            {/* Polished Map Canvas Vector */}
-            <div className="map-canvas-container">
-              <svg viewBox="0 0 800 400" className="map-svg-full">
-                {/* Background Map Grid */}
-                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#E2E8F0" strokeWidth="0.8" />
-                </pattern>
-                <rect width="100%" height="100%" fill="url(#grid)" />
-
-                {/* City boundary hints */}
-                <text x="70" y="45" fill="#94A3B8" fontSize="11" fontWeight="700">DKI JAKARTA</text>
-                <text x="660" y="190" fill="#94A3B8" fontSize="11" fontWeight="700">KOTA BEKASI</text>
-                <text x="360" y="375" fill="#94A3B8" fontSize="11" fontWeight="700">KOTA BOGOR</text>
-                <text x="60" y="300" fill="#94A3B8" fontSize="11" fontWeight="700">TANGERANG</text>
-                <text x="440" y="270" fill="#94A3B8" fontSize="11" fontWeight="700">DEPOK</text>
-
-                {/* 1. KRL Bogor Line (Red) */}
-                <path
-                  d="M 400 40 L 400 350"
-                  stroke="#DC2626"
-                  strokeWidth="5"
-                  strokeLinecap="round"
-                  fill="none"
-                />
-
-                {/* 2. KRL Cikarang / Bekasi Line (Blue) */}
-                <path
-                  d="M 160 140 L 400 140 L 720 140"
-                  stroke="#2563EB"
-                  strokeWidth="5"
-                  strokeLinecap="round"
-                  fill="none"
-                />
-
-                {/* 3. MRT Jakarta Line (Cyan) */}
-                <path
-                  d="M 360 80 L 360 290"
-                  stroke="#0284C7"
-                  strokeWidth="5"
-                  strokeLinecap="round"
-                  fill="none"
-                />
-
-                {/* 4. KRL Tangerang Line (Brown) */}
-                <path
-                  d="M 120 220 L 260 140"
-                  stroke="#92400E"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  fill="none"
-                />
-
-                {/* 5. LRT Jabodebek Line (Purple) */}
-                <path
-                  d="M 360 140 L 520 210 L 680 210"
-                  stroke="#7C3AED"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  fill="none"
-                />
-
-                {/* Station Nodes */}
-                {/* Jakarta Kota */}
-                <g style={{ cursor: 'pointer' }} onClick={() => setSelectedStation({ name: 'Stasiun Jakarta Kota', lines: 'KRL Lin Bogor, Lin Tanjung Priok', transitHub: true, zone: 'Jakarta Utara/Barat' })}>
-                  <circle cx="400" cy="50" r="6" fill="#FFFFFF" stroke="#DC2626" strokeWidth="3" />
-                  <text x="415" y="54" fontSize="11" fontWeight="600" fill="#0F172A">Jakarta Kota</text>
-                </g>
-
-                {/* Manggarai (Hub) */}
-                <g style={{ cursor: 'pointer' }} onClick={() => setSelectedStation({ name: 'Stasiun Manggarai', lines: 'KRL Lin Bogor, Lin Cikarang, KA Bandara', transitHub: true, zone: 'Transit Utama (Central Hub)' })}>
-                  <circle cx="400" cy="140" r="12" fill="#FFFFFF" stroke="#0F172A" strokeWidth="4" />
-                  <circle cx="400" cy="140" r="5" fill="#2563EB" />
-                  <text x="400" y="122" textAnchor="middle" fontSize="12" fontWeight="800" fill="#0F172A">MANGGARAI (Hub)</text>
-                </g>
-
-                {/* Sudirman / Dukuh Atas Hub */}
-                <g style={{ cursor: 'pointer' }} onClick={() => setSelectedStation({ name: 'Kawasan Dukuh Atas - Sudirman', lines: 'KRL Sudirman, MRT Dukuh Atas BNI, LRT Dukuh Atas, TJ Tosari', transitHub: true, zone: 'Kawasan Integrasi Dukuh Atas' })}>
-                  <circle cx="360" cy="140" r="10" fill="#FFFFFF" stroke="#0284C7" strokeWidth="3.5" />
-                  <circle cx="360" cy="140" r="4" fill="#7C3AED" />
-                  <text x="345" y="130" textAnchor="end" fontSize="11" fontWeight="700" fill="#0F172A">Sudirman / Dukuh Atas</text>
-                </g>
-
-                {/* Bundaran HI */}
-                <g style={{ cursor: 'pointer' }} onClick={() => setSelectedStation({ name: 'Stasiun Bundaran HI', lines: 'MRT Jakarta, TransJakarta Koridor 1', transitHub: true, zone: 'Jakarta Pusat' })}>
-                  <circle cx="360" cy="80" r="6" fill="#FFFFFF" stroke="#0284C7" strokeWidth="3" />
-                  <text x="345" y="84" textAnchor="end" fontSize="11" fontWeight="600" fill="#0F172A">Bundaran HI</text>
-                </g>
-
-                {/* Blok M */}
-                <g style={{ cursor: 'pointer' }} onClick={() => setSelectedStation({ name: 'Stasiun Blok M BCA', lines: 'MRT Jakarta, Terminal Bus TransJakarta', transitHub: true, zone: 'Jakarta Selatan' })}>
-                  <circle cx="360" cy="220" r="6" fill="#FFFFFF" stroke="#0284C7" strokeWidth="3" />
-                  <text x="345" y="224" textAnchor="end" fontSize="11" fontWeight="600" fill="#0F172A">Blok M</text>
-                </g>
-
-                {/* Lebak Bulus */}
-                <g style={{ cursor: 'pointer' }} onClick={() => setSelectedStation({ name: 'Stasiun Lebak Bulus Grab', lines: 'MRT Jakarta Terminus Selatan', transitHub: false, zone: 'Jakarta Selatan' })}>
-                  <circle cx="360" cy="290" r="6" fill="#FFFFFF" stroke="#0284C7" strokeWidth="3" />
-                  <text x="345" y="294" textAnchor="end" fontSize="11" fontWeight="600" fill="#0F172A">Lebak Bulus</text>
-                </g>
-
-                {/* Depok */}
-                <g style={{ cursor: 'pointer' }} onClick={() => setSelectedStation({ name: 'Stasiun Depok & Depok Baru', lines: 'KRL Lin Bogor', transitHub: false, zone: 'Kota Depok' })}>
-                  <circle cx="400" cy="240" r="6" fill="#FFFFFF" stroke="#DC2626" strokeWidth="3" />
-                  <text x="415" y="244" fontSize="11" fontWeight="600" fill="#0F172A">Depok</text>
-                </g>
-
-                {/* Bogor */}
-                <g style={{ cursor: 'pointer' }} onClick={() => setSelectedStation({ name: 'Stasiun Bogor', lines: 'KRL Lin Bogor Terminus', transitHub: false, zone: 'Kota Bogor' })}>
-                  <circle cx="400" cy="340" r="7" fill="#FFFFFF" stroke="#DC2626" strokeWidth="3.5" />
-                  <text x="415" y="344" fontSize="11" fontWeight="700" fill="#0F172A">Bogor</text>
-                </g>
-
-                {/* Bekasi */}
-                <g style={{ cursor: 'pointer' }} onClick={() => setSelectedStation({ name: 'Stasiun Bekasi', lines: 'KRL Lin Cikarang', transitHub: false, zone: 'Kota Bekasi' })}>
-                  <circle cx="580" cy="140" r="6" fill="#FFFFFF" stroke="#2563EB" strokeWidth="3" />
-                  <text x="580" y="165" textAnchor="middle" fontSize="11" fontWeight="600" fill="#0F172A">Bekasi</text>
-                </g>
-
-                {/* Cikarang */}
-                <g style={{ cursor: 'pointer' }} onClick={() => setSelectedStation({ name: 'Stasiun Cikarang', lines: 'KRL Lin Cikarang & Kereta Lokal', transitHub: false, zone: 'Kab. Bekasi' })}>
-                  <circle cx="710" cy="140" r="6" fill="#FFFFFF" stroke="#2563EB" strokeWidth="3" />
-                  <text x="710" y="165" textAnchor="middle" fontSize="11" fontWeight="600" fill="#0F172A">Cikarang</text>
-                </g>
-
-                {/* Tangerang */}
-                <g style={{ cursor: 'pointer' }} onClick={() => setSelectedStation({ name: 'Stasiun Tangerang', lines: 'KRL Lin Tangerang', transitHub: false, zone: 'Kota Tangerang' })}>
-                  <circle cx="130" cy="215" r="6" fill="#FFFFFF" stroke="#92400E" strokeWidth="3" />
-                  <text x="130" y="238" textAnchor="middle" fontSize="11" fontWeight="600" fill="#0F172A">Tangerang</text>
-                </g>
-
-                {/* Duri */}
-                <g style={{ cursor: 'pointer' }} onClick={() => setSelectedStation({ name: 'Stasiun Duri', lines: 'KRL Lin Tangerang, Lin Cikarang, KA Bandara', transitHub: true, zone: 'Jakarta Barat' })}>
-                  <circle cx="260" cy="140" r="7" fill="#FFFFFF" stroke="#92400E" strokeWidth="3.5" />
-                  <text x="260" y="125" textAnchor="middle" fontSize="10" fontWeight="700" fill="#0F172A">Duri (Transit)</text>
-                </g>
-              </svg>
-
-              {/* Station Info Overlay Card */}
-              {selectedStation && (
-                <div className="map-interactive-station-box">
-                  <div className="map-station-info-name">
-                    📍 {selectedStation.name}
-                  </div>
-                  <div className="map-station-info-details">
-                    <div><strong>Jalur:</strong> {selectedStation.lines}</div>
-                    <div style={{ marginTop: 3 }}><strong>Zona:</strong> {selectedStation.zone}</div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── 8. FINAL CTA ──────────────────────────────────────────────── */}
+      {/* â”€â”€â”€ 8. FINAL CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="cta-section">
         <div className="container cta-box">
           <h2 className="cta-title">Siap berangkat?</h2>
@@ -1160,7 +1013,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── 9. FOOTER ─────────────────────────────────────────────────── */}
+      {/* â”€â”€â”€ 9. FOOTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <footer className="home-footer">
         <div className="container">
           <div className="footer-grid">
@@ -1171,7 +1024,7 @@ export default function HomePage() {
                 <span>TRANSIT</span>
               </div>
               <p className="footer-brand-desc">
-                Jabodetabek Mobility Planner — Platform perencana perjalanan terintegrasi untuk transportasi umum komuter.
+                Jabodetabek Mobility Planner â€” Platform perencana perjalanan terintegrasi untuk transportasi umum komuter.
               </p>
               <div className="text-xs text-muted">
                 <em>Plan your route. Manage your time. Move smarter.</em>
@@ -1203,21 +1056,21 @@ export default function HomePage() {
             <div>
               <div className="footer-column-title">Cakupan Layanan</div>
               <div className="footer-link-list">
-                <span>• DKI Jakarta</span>
-                <span>• Kota & Kab. Bogor</span>
-                <span>• Kota Depok</span>
-                <span>• Kota & Kab. Tangerang</span>
-                <span>• Kota & Kab. Bekasi</span>
+                <span>â€¢ DKI Jakarta</span>
+                <span>â€¢ Kota & Kab. Bogor</span>
+                <span>â€¢ Kota Depok</span>
+                <span>â€¢ Kota & Kab. Tangerang</span>
+                <span>â€¢ Kota & Kab. Bekasi</span>
               </div>
             </div>
           </div>
 
           <div className="footer-bottom-row">
             <div>
-              © 2026 TRANSIT — Jabodetabek Mobility Planner. Hak Cipta Dilindungi.
+              Â© 2026 TRANSIT â€” Jabodetabek Mobility Planner. Hak Cipta Dilindungi.
             </div>
             <div className="footer-disclaimer-tag">
-              ⚠️ Data rute dan estimasi waktu disajikan sebagai data acuan simulasi pengembangan (Development Sample Data).
+              âš ï¸ Data rute dan estimasi waktu disajikan sebagai data acuan simulasi pengembangan (Development Sample Data).
             </div>
           </div>
         </div>
